@@ -35,13 +35,28 @@ public class QuickStartWindow : EditorWindow
 
 	void OnGUI(){
 
-		GUI.Box (new Rect (0, 0, width - 100, 50), "请选择模型");
+		GUILayout.BeginHorizontal ();
 
-		if (GUI.Button (new Rect(width- 100,0,100,50),"导入模型")) {
+		GUILayout.Label ("请选择模型", new GUILayoutOption[]{ GUILayout.Height (20) });
 
+		if (GUILayout.Button ("导入模型", new GUILayoutOption[]{ GUILayout.Height (20),GUILayout.Width(100) })) {
+		
+			string file=Utils.OpenFileLocalPath (new string[]{ "fbx", "max", "mb", "obj" });
+			if (!string.IsNullOrEmpty (file)) {
+				string modelPath = "/model/" + file.Substring (file.LastIndexOf ("/")+1);
+				FileUtils.copyFile (file,Utils.GetAssetsPath()+modelPath);
+				AssetDatabase.Refresh ();
+				Object obj=	AssetDatabase.LoadAssetAtPath ("Assets"+modelPath, typeof(GameObject));
+				GameObject.Instantiate (obj);
+			
 
-			Debug.Log (Utils.getProjectPath ());
+			}
 		}
+
+		GUILayout.EndHorizontal ();
+
+
+
 	
 	}
 
