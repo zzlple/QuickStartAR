@@ -30,6 +30,17 @@ public class FileUtils : MonoBehaviour
 
 	}
 
+
+
+
+
+	public static bool existsDir(string fullDir){
+
+		return Directory.Exists(fullDir);
+
+	}
+
+
 	/// <summary>
 	/// Existses the file.
 	/// </summary>
